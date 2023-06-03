@@ -24,20 +24,19 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: '11'
-          distribution: 'oracle'
+          distribution: 'temurin'
           cache: maven
       - name: Build with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn install --file pom.xml -Xtest
 
       - uses: a7ul/tar-action@v1.1.0
         with:
           command: c
-          cwd: './target'
           files: |
-            spring-boot-ecommerce-0.0.1-SNAPSHOT.jar/
+            ./target/spring-boot-ecommerce-0.0.1-SNAPSHOT.jar
             captain-definition
             Dockerfile
-            outPath: /github/workspace/deploy.tar
+          outPath: deploy.tar
 
       - name: Deploy App to CapRover
         uses: caprover/deploy-from-github@v1.0.1
