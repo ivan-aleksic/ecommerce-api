@@ -18,14 +18,20 @@ public class UserController {
 	public ResponseEntity<?> doLogin(@RequestParam String email, @RequestParam String password) {
 		Boolean success = userService.attemptLogin(email, password);
 		if (success) {
-			return new ResponseEntity<>(HttpStatus.OK);
+			return ResponseEntity.ok(userService.getByEmail(email).getUUID());
 		} else {
 			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 		}
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<User> doRegister(@RequestBody UserDto userDto) {
-		return ResponseEntity.ok(userService.createUser(userDto));
+	public ResponseEntity<?> doRegister(@RequestBody UserDto userDto) {
+		return ResponseEntity.ok(userService.createUser(userDto).getUUID());
+	}
+
+	@GetMapping("/get")
+	public ResponseEntity<?> getUser(@RequestParam String uuid) {
+		User user = userService.getByUUID(uuid);
+		return ResponseEntity.ok(user);
 	}
 }

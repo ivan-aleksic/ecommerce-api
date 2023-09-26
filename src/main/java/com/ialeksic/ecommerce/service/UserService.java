@@ -15,6 +15,14 @@ import java.util.UUID;
 public class UserService {
 	private final UserRepository userRepository;
 
+	public User getByEmail(String email) {
+		return userRepository.getByEmail(email);
+	}
+
+	public User getByUUID(String UUID) {
+		return userRepository.getByUUID(UUID);
+	}
+
 	public Boolean attemptLogin(String email, String password) {
 		User user = userRepository.getByEmail(email);
 		if (user == null) {
@@ -34,6 +42,7 @@ public class UserService {
 				.passwordSalt(salt)
 				.email(userDto.email)
 				.username(userDto.username)
+				.UUID(UUID.randomUUID().toString())
 				.build();
 		User dbUser = userRepository.save(user);
 		return dbUser;
