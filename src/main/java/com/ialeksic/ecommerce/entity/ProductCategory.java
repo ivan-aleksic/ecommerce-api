@@ -8,8 +8,6 @@ import java.util.Set;
 
 @Entity
 @Table(name="product_category")
-/* @Data -- known bug in lombok, when we use relationships like OneToMany and
-ManyToOne, so we use Getter and Setter annotations*/
 @Getter
 @Setter
 public class ProductCategory {
